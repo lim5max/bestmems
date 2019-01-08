@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/g.css') }}" >
+
+</head>
+<body>
+    <header>
+        <div class="list">
+            <a href="" class="g">О ПРОЕКТЕ</a>
+            <button onclick="funanim()">gjhghjj</button>
+        </div>
+        <div class="menu" id="g">
+            <div class="burg"></div>
+            <div class="burg"></div>
+            <div class="burg"></div>
+        </div>
+        </header>
+        <button id="scrollToTopButton" onclick="scrollToTop(300,3);"><i class="fa fa-arrow-up"></i></button>    <div class="aflex"><a class="images" id="ju" data-o="image" >images</a><a class="gif" id="ju1" data-o="gif">gifs</a></div>
+  <div id="con">
+
+        <div class="main">
+            <div class="inner"><div class="imgcontainer"><img src="static/img/img1.jpg" alt=""></div>
+            </div>
+            <div class="info"><h4>info</h4></div>
+
+        </div>
+  </div>
+
+ <script  >
+        
+    function imgags(){
+
+
+    my = 0
+    var xhr = new XMLHttpRequest();
+
+    xhr.open('GET', '/static/hjjjj.json', true);
+
+    xhr.send(); // (1)
+
+    xhr.onreadystatechange = function() { // (3)
+            if (xhr.readyState != 4) return;
+
+
+            if (xhr.status != 200) {
+                alert(xhr.status + ': ' + xhr.statusText);
+            } else {
+                var b = xhr.responseText;
+                var h = JSON.parse(b)
+                my = h[0]['enter'][0];
+                console.log(my)
+                nu = h[0]['enter'][1]
+                console.log(nu)
+                var con = document.getElementById('con')
+                while (con.firstChild) {
+                    con.removeChild(con.firstChild);
+                }
+
+                for (var i = 0; i < nu.length; i++) {
+
+                    var big = document.createElement('div')
+                    big.className = 'main'
+                    big.setAttribute('id', 'main')
+                    var inner = document.createElement('div')
+                    inner.className = 'inner'
+                    big.appendChild(inner)
+                    var imgcontainer = document.createElement('div')
+                    imgcontainer.className = 'imgcontainer'
+                    inner.appendChild(imgcontainer)
+                    var img = document.createElement('img')
+                    
+                    var k = nu[i]
+                    img.setAttribute('src', k)
+                    if(img.height > 500){
+                        console.log(img.height)
+                        img.className = 'img500';
+                    }else{
+                        img.className = 'images1'
+                    }
+
+                    img.setAttribute('id', 'img')
+                    img.setAttribute('name', 'img')
+
+                    imgcontainer.appendChild(img)
+                     con.appendChild(big)
+                   
+
+
+                }
+
+
+            }
+
+        }
+
+        }
+        imgags()
+        j = [];
+        ida = []
+        var images = document.getElementById('ju')
+        var gifs = document.getElementById('ju1')
+        if (window.matchMedia("(min-width: 400px)").matches) {
+        /* the viewport is at least 400 pixels wide */
+        } else {
+        /* the viewport is less than 400 pixels wide */
+        }
+        var gifs = document.getElementById('ju1')
+        var imgs = document.getElementById('ju')
+        imgs.setAttribute('data-active', '')
+        imgs.addEventListener('click', koll)
+        gifs.addEventListener('click', koll  )
+        function koll(e) {
+        loll(e.target.id)
+        sravnenie()
+    }
+        function loll(id){
+        switch (id){
+            case 'ju':
+                gifs.removeAttribute('data-active', '')
+                imgs.setAttribute('data-active', '')
+            case 'ju1':
+                imgs.removeAttribute('data-active', '')
+                gifs.setAttribute('data-active', '')
+            }
+        }
+        var container = document.getElementById('con')
+        
+        var y = document.getElementsByName('img')  
+        console.log(y[0] ) 
+        var html, body, scrollToTopButton;
+        window.onload = function() {
+            html = document.documentElement;
+            body = document.body;
+            scrollToTopButton = document.getElementById("scrollToTopButton");
+        };
+
+        function scrollToTop(totalTime, easingPower) {
+        //console.log("here");
+        var timeInterval = 1; //in ms
+        var scrollTop = Math.round(body.scrollTop || html.scrollTop);
+        //var by=- scrollTop;
+        var timeLeft = totalTime;
+        var scrollByPixel = setInterval(function() {
+            var percentSpent = (totalTime - timeLeft) / totalTime;
+            if (timeLeft >= 0) {
+            var newScrollTop = scrollTop * (1 - easeInOut(percentSpent, easingPower));
+            body.scrollTop = newScrollTop;
+            html.scrollTop = newScrollTop;
+            //console.log(easeInOut(percentSpent,easingPower));
+            timeLeft--;
+            } else {
+            clearInterval(scrollByPixel);
+            //Add hash to the url after scrolling
+            //window.location.hash = hash;
+            }
+        }, timeInterval);
+        }
+
+        function easeInOut(t, power) {
+        if (t < 0.5) {
+            return 0.5 * Math.pow(2 * t, power);
+        } else {
+            return 0.5 * (2 - Math.pow(2 * (1 - t), power));
+        }
+        }
+
+        window.onscroll = controlScrollToTopButton;
+
+        function controlScrollToTopButton() {
+        var windowInnerHeight = 2 * window.innerHeight;
+        if (
+            body.scrollTop > windowInnerHeight ||
+            html.scrollTop > windowInnerHeight
+        ) {
+            scrollToTopButton.classList.add("show");
+        } else {
+            scrollToTopButton.classList.remove("show");
+        }
+        }
+
+
+        
+
+
+  </script>
+
+</body>
+</html>
